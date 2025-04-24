@@ -1,11 +1,19 @@
-export default function Home() {
+"use server";
+
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+
+export default async function Page() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data?.user) {
+    redirect("/login");
+  }
   return (
     <main>
       <h1>Piggsy ENT</h1>
-      <p>
-        Bienvenido(a) a la versión empresarial de Piggsy, una app para tener la
-        gestión de tus finanzas en la palma de tu mano.
-      </p>
+      <h2>Bienvenido {data.user.email}</h2>
+      <a href="/signout">Cerrar sesión</a>
     </main>
   );
 }

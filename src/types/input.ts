@@ -16,7 +16,7 @@ export interface ReducedInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export interface InputSubmitProps {
+export interface SubmitProps {
   label: string;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  action: (formData: FormData) => void;
 }

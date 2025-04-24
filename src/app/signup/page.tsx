@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Input, InputEmail, InputSubmit } from "@/components/ui";
+import { Input, InputEmail, Submit } from "@/components/ui";
+import { signup } from "@/lib/supabase/actions/auth";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -19,17 +20,11 @@ export default function SignupPage() {
   ) => {
     setConfirmPassword(e.target.value);
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-  };
 
   return (
     <main>
       <h1>Crear cuenta</h1>
-      <form onSubmit={handleSubmit}>
+      <form>
         <InputEmail required value={email} onChange={handleEmailChange} />
         <Input
           type="password"
@@ -53,7 +48,7 @@ export default function SignupPage() {
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
         />
-        <InputSubmit label="Crear cuenta" />
+        <Submit label="Crear cuenta" action={signup} />
       </form>
       <p>
         ¿Ya tienes una cuenta?{" "}
