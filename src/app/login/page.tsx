@@ -34,14 +34,6 @@ export default function LoginPage() {
         <Submit label="Ingresar" action={login} />
       </form>
       <p>
-        <a
-          href="/forgot-password"
-          aria-label="Ir a la página de recuperación de contraseña"
-        >
-          Olvidaste tu contraseña?
-        </a>
-      </p>
-      <p>
         ¿No tienes una cuenta?{" "}
         <a href="/signup" aria-label="Ir a la página de registro">
           Regístrate aquí
