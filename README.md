@@ -15,7 +15,7 @@ Un fork es una copia del repositorio principal en tu cuenta de GitHub. Esto te p
 ### 1. Haz un fork del repositorio
 
 1. Inicia sesión en tu cuenta de GitHub.
-2. Ve al repositorio principal de **Piggsy ENT**: [Piggsy ENT Repository](https://github.com/tu-organizacion/piggsy-ent).
+2. Ve al repositorio principal de **Piggsy ENT**: [Piggsy ENT Repository](https://github.com/armandodev/piggsy-ent).
 3. Haz clic en el botón **Fork** en la esquina superior derecha de la página.
 4. Ahora tendrás una copia del repositorio en tu cuenta de GitHub.
 
@@ -45,7 +45,7 @@ cd piggsy-ent
 2. Agrega el repositorio original como un remoto llamado `upstream`:
 
 ```bash
-git remote add upstream https://github.com/tu-organizacion/piggsy-ent.git
+git remote add upstream https://github.com/armandodev/piggsy-ent.git
 ```
 
 3. Verifica que los remotos estén configurados correctamente:
@@ -59,8 +59,8 @@ Deberías ver algo como esto:
 ```
 origin    https://github.com/tu-usuario/piggsy-ent.git (fetch)
 origin    https://github.com/tu-usuario/piggsy-ent.git (push)
-upstream  https://github.com/tu-organizacion/piggsy-ent.git (fetch)
-upstream  https://github.com/tu-organizacion/piggsy-ent.git (push)
+upstream  https://github.com/armandodev/piggsy-ent.git (fetch)
+upstream  https://github.com/armandodev/piggsy-ent.git (push)
 ```
 
 ---
@@ -75,7 +75,7 @@ Antes de hacer cambios, crea una nueva rama para mantener tu trabajo organizado:
 git checkout -b nombre-de-tu-rama
 ```
 
-Reemplaza `nombre-de-tu-rama` con un nombre descriptivo para tu rama.
+Reemplaza `nombre-de-tu-rama` con un nombre descriptivo para tu rama de preferencia en inglés.
 
 ### 2. Realiza tus cambios
 
@@ -100,6 +100,8 @@ git commit -m "Descripción de los cambios"
 ```bash
 git push origin nombre-de-tu-rama
 ```
+
+Este proceso se puede realizar de forma más rápida y fácil de entender utilizando la interfaz gráfica de VSCode.
 
 ### 4. Crea un pull request
 
