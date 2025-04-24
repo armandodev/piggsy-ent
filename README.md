@@ -32,6 +32,14 @@ git clone <URL-de-tu-fork>
 
 Reemplaza `<URL-de-tu-fork>` con la URL que copiaste.
 
+No olvides ejecutar el comando para instalar las dependencias del proyecto:
+
+```bash
+npm install
+```
+
+Esto instalará todas las dependencias necesarias para que el proyecto funcione correctamente.
+
 ### 3. Configura el repositorio remoto original
 
 Esto te permitirá mantener tu fork actualizado con los cambios del repositorio principal.
