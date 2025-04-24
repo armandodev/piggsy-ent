@@ -1,36 +1,143 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Piggsy ENT
 
-## Getting Started
+¡Bienvenido al repositorio de **Piggsy ENT**! Este documento te guiará paso a paso para clonar el repositorio desde un fork y preparar tu entorno para colaborar con el proyecto. Sigue estas instrucciones cuidadosamente.
 
-First, run the development server:
+---
+
+## ¿Qué es un fork?
+
+Un fork es una copia del repositorio principal en tu cuenta de GitHub. Esto te permite trabajar en tus propios cambios sin afectar el repositorio original. Una vez que termines tus cambios, puedes enviar un **pull request** para que los revisemos y los integremos al proyecto principal.
+
+---
+
+## Pasos para clonar el repositorio desde un fork
+
+### 1. Haz un fork del repositorio
+
+1. Inicia sesión en tu cuenta de GitHub.
+2. Ve al repositorio principal de **Piggsy ENT**: [Piggsy ENT Repository](https://github.com/tu-organizacion/piggsy-ent).
+3. Haz clic en el botón **Fork** en la esquina superior derecha de la página.
+4. Ahora tendrás una copia del repositorio en tu cuenta de GitHub.
+
+### 2. Clona tu fork en tu computadora
+
+1. Ve a tu fork del repositorio en tu cuenta de GitHub.
+2. Haz clic en el botón **Code** y copia la URL del repositorio (puede ser HTTPS o SSH).
+3. Abre una terminal en tu computadora.
+4. Escribe el siguiente comando para clonar tu fork:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <URL-de-tu-fork>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Reemplaza `<URL-de-tu-fork>` con la URL que copiaste.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configura el repositorio remoto original
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Esto te permitirá mantener tu fork actualizado con los cambios del repositorio principal.
 
-## Learn More
+1. Entra en la carpeta del proyecto:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cd piggsy-ent
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Agrega el repositorio original como un remoto llamado `upstream`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+git remote add upstream https://github.com/tu-organizacion/piggsy-ent.git
+```
 
-## Deploy on Vercel
+3. Verifica que los remotos estén configurados correctamente:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+git remote -v
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deberías ver algo como esto:
+
+```
+origin    https://github.com/tu-usuario/piggsy-ent.git (fetch)
+origin    https://github.com/tu-usuario/piggsy-ent.git (push)
+upstream  https://github.com/tu-organizacion/piggsy-ent.git (fetch)
+upstream  https://github.com/tu-organizacion/piggsy-ent.git (push)
+```
+
+---
+
+## ¿Cómo hacer cambios y enviar un pull request?
+
+### 1. Crea una nueva rama para tus cambios
+
+Antes de hacer cambios, crea una nueva rama para mantener tu trabajo organizado:
+
+```bash
+git checkout -b nombre-de-tu-rama
+```
+
+Reemplaza `nombre-de-tu-rama` con un nombre descriptivo para tu rama.
+
+### 2. Realiza tus cambios
+
+Edita los archivos necesarios y guarda tus cambios.
+
+### 3. Guarda y sube tus cambios
+
+1. Añade los archivos modificados al área de preparación:
+
+```bash
+git add .
+```
+
+2. Crea un commit con un mensaje descriptivo:
+
+```bash
+git commit -m "Descripción de los cambios"
+```
+
+3. Sube tu rama a tu fork:
+
+```bash
+git push origin nombre-de-tu-rama
+```
+
+### 4. Crea un pull request
+
+1. Ve a tu fork en GitHub.
+2. Haz clic en el botón **Compare & pull request**.
+3. Escribe una descripción clara de los cambios que realizaste.
+4. Haz clic en **Create pull request**.
+
+---
+
+## Mantén tu fork actualizado
+
+Para evitar conflictos, asegúrate de mantener tu fork sincronizado con el repositorio principal.
+
+1. Cambia a la rama principal:
+
+```bash
+git checkout main
+```
+
+2. Descarga los últimos cambios del repositorio principal:
+
+```bash
+git fetch upstream
+```
+
+3. Fusiona los cambios en tu rama principal:
+
+```bash
+git merge upstream/main
+```
+
+4. Sube los cambios a tu fork:
+
+```bash
+git push origin main
+```
+
+---
+
+¡Listo! Ahora estás preparado para colaborar en **Piggsy ENT**. Si tienes dudas, no dudes en preguntar a tus compañeros de equipo.
