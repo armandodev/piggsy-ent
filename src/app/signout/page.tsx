@@ -1,4 +1,4 @@
-import { signout } from "@/lib/supabase/actions/auth";
+import { signout } from "@/lib/supabase/actions";
 
 export default async function SignoutPage() {
   await signout();

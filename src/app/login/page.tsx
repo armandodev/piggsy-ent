@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Input, InputEmail, Submit } from "@/components/ui";
-import { login } from "@/lib/supabase/actions/auth";
+import { login } from "@/lib/supabase/actions";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
