@@ -1,5 +1,6 @@
 "use server";
 
+import { Navbar } from "@/components/ui";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -11,9 +12,9 @@ export default async function Page() {
   }
   return (
     <main>
+      <Navbar />
       <h1>Piggsy ENT</h1>
       <h2>Bienvenido {data.user.email}</h2>
-      <a href="/signout">Cerrar sesión</a>
     </main>
   );
 }
