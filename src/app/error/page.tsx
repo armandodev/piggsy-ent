@@ -1,4 +1,5 @@
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
 const ErrorPage: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const ErrorPage: React.FC = () => {
         <p>We couldn't find the page you were looking for.</p>
       </section>
       <footer>
-        <a href="/">Go back to the homepage</a>
+        <Link href="/">Go back to the homepage</Link>
       </footer>
     </main>
   );
