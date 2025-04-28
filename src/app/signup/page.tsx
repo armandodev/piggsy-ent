@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Input, InputEmail, Submit } from "@/components/ui";
 import { signup } from "@/lib/supabase/actions";
+import Link from "next/link";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -52,9 +53,9 @@ export default function SignupPage() {
       </form>
       <p>
         ¿Ya tienes una cuenta?{" "}
-        <a href="/login" aria-label="Ir a la página de inicio de sesión">
+        <Link href="/login" aria-label="Ir a la página de inicio de sesión">
           Inicia sesión aquí
-        </a>
+        </Link>
       </p>
     </main>
   );

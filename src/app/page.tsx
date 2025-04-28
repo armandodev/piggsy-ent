@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
@@ -13,7 +14,7 @@ export default async function Page() {
     <main>
       <h1>Piggsy ENT</h1>
       <h2>Bienvenido {data.user.email}</h2>
-      <a href="/signout">Cerrar sesión</a>
+      <Link href="/signout">Cerrar sesión</Link>
     </main>
   );
 }

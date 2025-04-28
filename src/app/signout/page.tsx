@@ -1,4 +1,5 @@
 import { signout } from "@/lib/supabase/actions";
+import Link from "next/link";
 
 export default async function SignoutPage() {
   await signout();
@@ -7,9 +8,9 @@ export default async function SignoutPage() {
       <h1>Cierre de sesión</h1>
       <p>Has cerrado sesión correctamente.</p>
       <p>
-        <a href="/login" aria-label="Ir a la página de inicio de sesión">
+        <Link href="/login" aria-label="Ir a la página de inicio de sesión">
           Inicia sesión aquí
-        </a>
+        </Link>
       </p>
     </main>
   );

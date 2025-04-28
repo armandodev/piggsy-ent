@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Input, InputEmail, Submit } from "@/components/ui";
 import { login } from "@/lib/supabase/actions";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -35,9 +36,9 @@ export default function LoginPage() {
       </form>
       <p>
         ¿No tienes una cuenta?{" "}
-        <a href="/signup" aria-label="Ir a la página de registro">
+        <Link href="/signup" aria-label="Ir a la página de registro">
           Regístrate aquí
-        </a>
+        </Link>
       </p>
     </main>
   );
