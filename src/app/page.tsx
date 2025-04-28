@@ -2,7 +2,6 @@
 
 import { Navbar } from "@/components/ui";
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
@@ -12,10 +11,12 @@ export default async function Page() {
     redirect("/login");
   }
   return (
-    <main>
-      <h1>Piggsy ENT</h1>
-      <h2>Bienvenido {data.user.email}</h2>
-      <Link href="/signout">Cerrar sesión</Link>
-    </main>
+    <>
+      <Navbar />
+      <main className="flex flex-col items-center justify-center min-h-screen p-4">
+        <h1 className="text-3xl text-teal-900 font-bold">Piggsy ENT</h1>
+        <h2 className="text-lg">Bienvenido {data.user.email}</h2>
+      </main>
+    </>
   );
 }
