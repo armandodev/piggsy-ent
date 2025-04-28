@@ -8,7 +8,7 @@ const ErrorPage: React.FC = () => {
         <h1>Oops! Something went wrong.</h1>
       </header>
       <section>
-        <p>We couldn't find the page you were looking for.</p>
+        <p>We couldn&apos;t find the page you were looking for.</p>
       </section>
       <footer>
         <Link href="/">Go back to the homepage</Link>
