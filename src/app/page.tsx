@@ -1,9 +1,5 @@
 import React from "react";
 
-export default function Page() {
-  return (
-    <>
-      <h1>Piggsy ENT</h1>
-    </>
-  );
+export default async function Page() {
+  return <h1>Piggsy ENT</h1>;
 }
