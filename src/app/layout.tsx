@@ -6,6 +6,10 @@ const onest = Onest({
   subsets: ["latin"],
 });
 
+export const metadata = {
+  title: "Piggsy ENT",
+};
+
 export default function RootLayout({
   children,
 }: {
