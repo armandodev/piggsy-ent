@@ -1,9 +1,14 @@
+import { LoginForm } from "@/components/forms";
 import React from "react";
 
 export const metadata = {
-  title: "Inicio de sesión - Piggsy ENT",
+  title: "Iniciar sesión - Piggsy ENT",
 };
 
 export default function LoginPage() {
-  return <h1>Inicio de sesión</h1>;
+  return (
+    <main className="grid place-items-center min-h-screen">
+      <LoginForm />
+    </main>
+  );
 }

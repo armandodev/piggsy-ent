@@ -1,3 +1,4 @@
+import { SignupForm } from "@/components/forms";
 import React from "react";
 
 export const metadata = {
@@ -5,5 +6,9 @@ export const metadata = {
 };
 
 export default function SignupPage() {
-  return <h1>Registro</h1>;
+  return (
+    <main className="grid place-items-center min-h-screen">
+      <SignupForm />
+    </main>
+  );
 }
