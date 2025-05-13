@@ -24,7 +24,7 @@ export default function Transaction({
           <p>{transaction.description}</p>
           <p className="text-gray-500">{date}</p>
         </div>
-        <MoneyDisplay amount={transaction.total_amount} transactions />
+        <MoneyDisplay amount={transaction.total_amount} />
       </Link>
     </li>
   );
