@@ -1,12 +1,11 @@
 import React from "react";
-import { Section } from "@/components/ui/";
+import { CashBalance, LastTransactions } from "@/components/ui";
 
-export default function Page() {
+export default async function Page() {
   return (
     <main>
-      <Section>
-        <h1>Piggsy ENT</h1>
-      </Section>
+      <CashBalance />
+      <LastTransactions />
     </main>
   );
 }

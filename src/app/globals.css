@@ -6,13 +6,3 @@ html {
   scrollbar-gutter: stable;
   scroll-behavior: smooth;
 }
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1);
-  }
-}

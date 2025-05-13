@@ -2,3 +2,7 @@ export { default as Loader } from "./Loader";
 export { default as Input } from "./Input";
 export { default as Button } from "./Button";
 export { default as Section } from "./Section";
+export { default as CashBalance } from "./CashBalance";
+export { default as LastTransactions } from "./LastTransactions";
+export { default as MoneyDisplay } from "./MoneyDisplay";
+export { default as Transaction } from "./Transaction";
