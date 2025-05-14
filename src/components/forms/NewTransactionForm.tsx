@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui";
 import { createTransaction } from "@/lib/supabase/transaction-actions";
-import { useRouter } from "next/navigation"; // Cambiado desde redirect
+import { useRouter } from "next/navigation";
 import validateTransactionForm from "@/lib/utils/validators";
 import { AccountCategoryMap } from "@/types/accounts";
 import SelectAccount from "../ui/SelectAccount";
@@ -15,11 +15,11 @@ type TransactionDetail = {
 };
 
 export default function NewTransactionForm({
-  accounts,
+  accounts = {},
 }: {
   accounts: AccountCategoryMap;
 }) {
-  const router = useRouter(); // Añadido el useRouter hook
+  const router = useRouter();
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState<"pendiente" | "completada" | "anulada">(
@@ -32,6 +32,7 @@ export default function NewTransactionForm({
   const [error, setError] = useState<string | null>(null);
   const [totalDebit, setTotalDebit] = useState(0);
   const [totalCredit, setTotalCredit] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     let debit = 0;
@@ -56,8 +57,8 @@ export default function NewTransactionForm({
     const newDetails = [...details];
     if (field === "amount") {
       const numberValue = Number(value);
-      if (isNaN(numberValue) || numberValue <= 0) {
-        setError("El monto debe ser un número mayor que cero");
+      if (isNaN(numberValue) || numberValue < 0) {
+        setError("El monto debe ser un número positivo");
         return;
       }
       newDetails[index][field] = numberValue;
@@ -85,41 +86,76 @@ export default function NewTransactionForm({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+    setIsSubmitting(true);
 
     try {
+      // 1. Validar datos antes de enviar
+      if (!date || !description) {
+        setError("Todos los campos son obligatorios");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 2. Validar que todas las cuentas estén seleccionadas
+      for (const detail of details) {
+        if (!detail.account_id) {
+          setError("Por favor, selecciona una cuenta para cada detalle");
+          setIsSubmitting(false);
+          return;
+        }
+        if (detail.amount <= 0) {
+          setError("Todos los montos deben ser mayores que cero");
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
+      // 3. Validar que los totales de cargo y abono sean iguales
+      if (totalDebit !== totalCredit) {
+        setError(
+          `Los montos no cuadran: Cargo=${totalDebit.toFixed(
+            2
+          )}, Abono=${totalCredit.toFixed(2)}`
+        );
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 4. Crear FormData para enviar
       const formData = new FormData();
       formData.append("date", date);
       formData.append("description", description);
       formData.append("status", status);
-      formData.append("details", JSON.stringify(details));
 
-      const { error: validationError } = validateTransactionForm(
-        formData,
-        totalDebit,
-        totalCredit
-      );
+      // 5. Convertir detalles a JSON string, asegurando que son objetos simples
+      const simplifiedDetails = details.map((detail) => ({
+        account_id: detail.account_id,
+        amount: Number(detail.amount),
+        type: detail.type,
+      }));
+      formData.append("details", JSON.stringify(simplifiedDetails));
 
-      if (validationError) {
-        setError(validationError);
+      // 6. Enviar la transacción
+      const response = await createTransaction(formData);
+
+      // 7. Manejar respuesta
+      if (response.error) {
+        setError(`Error al crear la transacción: ${response.error.message}`);
+        setIsSubmitting(false);
         return;
       }
 
-      const result = await createTransaction(formData);
-
-      if (result.error) {
-        setError(`Error al crear la transacción: ${result.error.message}`);
-        return;
-      }
-
-      // Usar router.push en lugar de redirect
+      // 8. Éxito - redirigir
       router.push("/transactions");
+      router.refresh();
     } catch (err) {
-      console.error("Error inesperado:", err);
+      console.error("Error al procesar el formulario:", err);
       setError(
         `Error inesperado: ${
           err instanceof Error ? err.message : "Error desconocido"
         }`
       );
+      setIsSubmitting(false);
     }
   };
 
@@ -183,6 +219,23 @@ export default function NewTransactionForm({
           Detalles de la transacción
         </legend>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 bg-teal-50 rounded-md">
+          <div className="font-medium">
+            Total Cargos:{" "}
+            <span className="font-bold">{totalDebit.toFixed(2)}</span>
+          </div>
+          <div className="font-medium">
+            Total Abonos:{" "}
+            <span className="font-bold">{totalCredit.toFixed(2)}</span>
+          </div>
+          {totalDebit !== totalCredit && (
+            <div className="col-span-2 text-yellow-600 bg-yellow-50 p-2 rounded-md text-sm">
+              <strong>¡Atención!</strong> Los montos de cargo y abono deben ser
+              iguales.
+            </div>
+          )}
+        </div>
+
         <ul className="grid gap-4 mb-4">
           {details.map((detail, index) => (
             <li
@@ -218,7 +271,7 @@ export default function NewTransactionForm({
                 type="number"
                 placeholder="0.00"
                 required
-                value={detail.amount}
+                value={detail.amount || ""}
                 onChange={(e) =>
                   handleDetailChange(index, "amount", e.target.value)
                 }
@@ -230,6 +283,7 @@ export default function NewTransactionForm({
               type="button"
               onClick={removeLastDetail}
               className="w-full p-2 bg-gray-100 text-gray-500 rounded-md hover:bg-gray-200 cursor-pointer transition-colors duration-200 font-medium"
+              disabled={details.length <= 2}
             >
               Eliminar detalle
             </button>
@@ -245,11 +299,15 @@ export default function NewTransactionForm({
       </fieldset>
 
       <button
-        className="w-full p-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 cursor-pointer transition-colors duration-200 font-medium"
+        className={`w-full p-2 ${
+          totalDebit !== totalCredit || isSubmitting
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-teal-500 hover:bg-teal-600 cursor-pointer"
+        } text-white rounded-md transition-colors duration-200 font-medium`}
         type="submit"
-        disabled={totalDebit !== totalCredit}
+        disabled={totalDebit !== totalCredit || isSubmitting}
       >
-        Registrar Transacción
+        {isSubmitting ? "Procesando..." : "Registrar Transacción"}
       </button>
     </form>
   );

@@ -1,11 +1,14 @@
 import React from "react";
-import { CashBalance, LastTransactions } from "@/components/ui";
+import { CashBalance, LastTransactions, Navigation } from "@/components/ui";
 
 export default async function Page() {
   return (
-    <main>
-      <CashBalance />
-      <LastTransactions />
-    </main>
+    <>
+      <main>
+        <CashBalance />
+        <LastTransactions />
+      </main>
+      <Navigation />
+    </>
   );
 }
