@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function CashBalance() {
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("get_user_cash_balance");
+  const { data, error } = await supabase.rpc("get_user_cash_account");
   if (error) {
     console.error("Error fetching cash account:", error);
     return <div>Error loading cash account</div>;

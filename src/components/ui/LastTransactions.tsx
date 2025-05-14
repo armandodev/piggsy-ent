@@ -2,6 +2,7 @@ import React from "react";
 import { Section, Transaction } from "@/components/ui";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 
 export default async function LastTransactions() {
   const supabase = await createClient();
@@ -18,12 +19,13 @@ export default async function LastTransactions() {
   return (
     <Section>
       <header className="flex justify-between items-center">
-        <h2 className="text-lg">Transacciones recientes</h2>
+        <h2>Transacciones recientes</h2>
         <Link
           href="/transactions/new"
-          className="text-teal-500 hover:underline"
+          className="flex gap-2 items-center text-teal-500 hover:text-teal-600 transition-colors hover:bg-teal-100 p-2 rounded-full sm:rounded-lg"
         >
-          Nueva transacción
+          <Plus />
+          <span className="hidden sm:block">Nueva</span>
         </Link>
       </header>
       <ul className="grid">

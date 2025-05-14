@@ -18,14 +18,18 @@ export default function MoneyDisplay({
   return (
     <span
       className={`grid ${
-        isNegative ? "text-red-500" : transactions && "text-teal-500"
+        isNegative
+          ? "text-red-500"
+          : transactions
+          ? "text-teal-500"
+          : "text-gray-800"
       } ${className}`}
     >
       <span>
         {isNegative ? "-" : transactions && "+"}${integer}
         <span className="align-top text-xs">{`.${decimal}`}</span>
       </span>
-      <span className="text-black text-lg">{label}</span>
+      {label && <span className="text-gray-500 text-lg">{label}</span>}
     </span>
   );
 }

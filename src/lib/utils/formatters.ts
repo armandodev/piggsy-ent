@@ -20,10 +20,18 @@ function addThousandsSeparator(num: string) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export function formatDate(dateString: string) {
+export function formatLongDate(dateString: string) {
   const date = new Date(dateString);
 
   return new Intl.DateTimeFormat("es-ES", {
     dateStyle: "long",
+  }).format(date);
+}
+
+export function formatShortDate(dateString: string) {
+  const date = new Date(dateString);
+
+  return new Intl.DateTimeFormat("es-ES", {
+    dateStyle: "short",
   }).format(date);
 }
