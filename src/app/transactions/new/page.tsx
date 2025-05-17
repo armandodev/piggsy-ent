@@ -1,5 +1,5 @@
 import { NewTransactionForm } from "@/components/forms";
-import { getAccounts } from "@/lib/supabase/transaction-actions";
+import { getAccounts } from "@/lib/supabase/actions/transactions/transaction-actions";
 import React from "react";
 import { Section } from "@/components/ui";
 

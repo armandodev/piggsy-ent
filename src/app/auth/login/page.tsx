@@ -1,5 +1,6 @@
-import { LoginForm } from "@/components/forms";
 import React from "react";
+import { LoginForm } from "@/components/forms";
+import Layout from "@/components/ui/Layout";
 
 export const metadata = {
   title: "Iniciar sesión - Piggsy ENT",
@@ -7,8 +8,8 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="grid place-items-center min-h-screen">
+    <Layout>
       <LoginForm />
-    </main>
+    </Layout>
   );
 }

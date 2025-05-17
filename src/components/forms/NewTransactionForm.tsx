@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui";
-import { createTransaction } from "@/lib/supabase/transaction-actions";
+import { createTransaction } from "@/lib/supabase/actions/transactions";
 import { useRouter } from "next/navigation";
 import validateTransactionForm from "@/lib/utils/validators";
 import { AccountCategoryMap } from "@/types/accounts";

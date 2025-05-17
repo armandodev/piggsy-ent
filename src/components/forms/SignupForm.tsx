@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "@/components/ui";
-import { signup } from "@/lib/supabase/auth-actions";
+import { Input, Button } from "@/components/ui";
+import { signupAction } from "@/lib/supabase/actions/auth";
 
 export default function SignupForm() {
   const [email, setEmail] = useState("");
@@ -10,31 +10,58 @@ export default function SignupForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    setSuccess(null);
+  const validateInputs = () => {
     if (!email || !password || !confirmPassword) {
       setError("Por favor, completa todos los campos");
-      return;
+      return false;
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
       setError("El correo electrónico no es válido");
-      return;
+      return false;
     }
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden");
-      return;
+      return false;
     }
     if (password.length < 6) {
       setError("La contraseña debe tener al menos 6 caracteres");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    if (!validateInputs()) return;
+
+    setIsLoading(true);
+
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("confirm-password", confirmPassword);
+
+    const result = await signupAction(formData);
+
+    setIsLoading(false);
+
+    if (!result.success) {
+      setError(result.message);
       return;
     }
-    signup(new FormData(e.currentTarget));
+
     setSuccess(
       "Registro exitoso. Por favor, verifica tu correo electrónico para confirmar tu cuenta."
     );
+
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
   };
 
   return (
@@ -46,12 +73,15 @@ export default function SignupForm() {
         <span className="text-3xl text-teal-900">Registro</span>
         <span className="text-teal-500">Piggsy ENT</span>
       </h1>
+
       {error && (
         <p className="bg-red-100 text-red-500 p-2 rounded-md">{error}</p>
       )}
+
       {success && (
         <p className="bg-teal-100 text-teal-500 p-2 rounded-md">{success}</p>
       )}
+
       <Input
         id="email"
         label="Correo electrónico"
@@ -61,6 +91,7 @@ export default function SignupForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
         <Input
           id="password"
@@ -81,12 +112,10 @@ export default function SignupForm() {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </div>
-      <button
-        className="w-full p-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 cursor-pointer transition-colors duration-200"
-        type="submit"
-      >
-        Registrar
-      </button>
+
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? "Procesando..." : "Registrar"}
+      </Button>
 
       <p className="text-center text-gray-500">
         ¿Ya tienes una cuenta?{" "}

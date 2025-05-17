@@ -32,6 +32,11 @@ export default async function LastTransactions() {
         {transactions.map((transaction) => (
           <Transaction key={transaction.id} transaction={transaction} />
         ))}
+        {transactions.length === 0 && (
+          <li className="text-gray-500 text-center">
+            No hay transacciones recientes
+          </li>
+        )}
       </ul>
     </Section>
   );

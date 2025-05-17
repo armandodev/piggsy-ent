@@ -1,28 +1,21 @@
-import { Section } from "@/components/ui";
-import { createClient } from "@/lib/supabase/server";
+import { Layout, Section } from "@/components/ui";
+import { signout } from "@/lib/supabase/actions/auth";
 import Link from "next/link";
 import React from "react";
 
-export default async function SignOutPage() {
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    console.error("Error signing out:", error);
-    return <div>Error signing out</div>;
-  }
-
+export default function SignOutPage() {
+  signout();
   return (
-    <main className="grid place-items-center min-h-screen">
-      <Section className="grid">
+    <Layout>
+      <Section>
         <h1 className="text-2xl font-bold">¡Hasta luego!</h1>
-        <p className="mt-4 text-lg">
+        <p className="text-lg">
           Gracias por usar Piggsy, esperamos verte pronto.
         </p>
-        <Link href="/" className="mt-4 text-teal-500 hover:underline">
+        <Link href="/" className="text-teal-500 hover:underline">
           Ir al inicio de sesión
         </Link>
       </Section>
-    </main>
+    </Layout>
   );
 }

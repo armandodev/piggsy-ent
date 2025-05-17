@@ -7,3 +7,4 @@ export { default as LastTransactions } from "./LastTransactions";
 export { default as MoneyDisplay } from "./MoneyDisplay";
 export { default as Transaction } from "./Transaction";
 export { default as Navigation } from "./Navigation";
+export { default as Layout } from "./Layout";
