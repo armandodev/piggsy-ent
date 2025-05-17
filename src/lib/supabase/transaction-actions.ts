@@ -19,20 +19,17 @@ export async function createTransaction(formData: FormData) {
   try {
     const supabase = await createClient();
 
-    // Extraer y validar datos del formulario
     const date = formData.get("date") as string;
     const description = formData.get("description") as string;
     const status = formData.get("status") as string;
     const detailsJson = formData.get("details") as string;
 
-    // Parsear y asegurar que los detalles son objetos planos
     const details = JSON.parse(detailsJson).map((detail: any) => ({
       account_id: String(detail.account_id),
       amount: Number(detail.amount),
       type: String(detail.type),
     }));
 
-    // Llamar al procedimiento almacenado en Supabase
     const { data, error } = await supabase.rpc("create_transaction", {
       t_date: date,
       t_description: description,
@@ -40,7 +37,6 @@ export async function createTransaction(formData: FormData) {
       t_details: details,
     });
 
-    // Manejar errores
     if (error) {
       console.error("Error en la transacción:", error);
       return {
@@ -52,7 +48,6 @@ export async function createTransaction(formData: FormData) {
       };
     }
 
-    // Asegurar que los datos son serializables
     return {
       data: data ? ensureSerializable(data) : null,
       error: null,
@@ -73,7 +68,6 @@ export async function getAccounts() {
   try {
     const supabase = await createClient();
 
-    // Obtener datos de la vista de cuentas por categoría
     const { data, error } = await supabase
       .from("vw_accounts_category")
       .select("id, name, code, category")
@@ -93,7 +87,6 @@ export async function getAccounts() {
       return { data: {}, error: null };
     }
 
-    // Crear estructura plana para las cuentas por categoría
     const accountsByCategory: Record<
       string,
       {
@@ -102,7 +95,6 @@ export async function getAccounts() {
       }
     > = {};
 
-    // Procesar cada cuenta y agruparla por categoría
     for (const account of data) {
       const category = String(account.category);
 
@@ -122,7 +114,6 @@ export async function getAccounts() {
       });
     }
 
-    // Garantizar que el objeto es serializable
     return {
       data: ensureSerializable(accountsByCategory),
       error: null,

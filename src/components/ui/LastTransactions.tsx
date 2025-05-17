@@ -28,7 +28,7 @@ export default async function LastTransactions() {
           <span className="hidden sm:block">Nueva</span>
         </Link>
       </header>
-      <ul className="grid">
+      <ul className="grid gap-4">
         {transactions.map((transaction) => (
           <Transaction key={transaction.id} transaction={transaction} />
         ))}
